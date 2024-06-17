@@ -12,17 +12,22 @@ Trie dictionary = InitializeTrie(words);
 // SearchWord();
 // PrefixAutocomplete();
 // DeleteWord();
-// GetSpellingSuggestions();
+GetSpellingSuggestions();
 
+// Método para inicializar un Trie (un tipo de estructura de datos de árbol) con un conjunto de palabras
 Trie InitializeTrie(string[] words)
 {
+    // Crear una nueva instancia de Trie
     Trie trie = new Trie();
 
+    // Iterar sobre cada palabra en el conjunto de palabras
     foreach (string word in words)
     {
+        // Insertar la palabra actual en el Trie
         trie.Insert(word);
     }
 
+    // Devolver el Trie después de insertar todas las palabras
     return trie;
 }
 
@@ -32,16 +37,16 @@ void SearchWord()
     {
         Console.WriteLine("Enter a word to search for, or press Enter to exit.");
         string? input = Console.ReadLine();
+        
         if (input == "")
         {
             break;
         }
-        /*
+
         if (input != null && dictionary.Search(input))
         {
             Console.WriteLine($"Found \"{input}\" in dictionary");
         }
-        */
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -66,14 +71,12 @@ void DeleteWord()
         {
             break;
         }
-        /*
         if (input != null && dictionary.Search(input))
         {
             dictionary.Delete(input);
             Console.WriteLine($"Deleted \"{input}\" from dictionary\n");
             PrintTrie(dictionary);
         }
-        */
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -196,11 +199,21 @@ void GetPrefixInput()
 
 void PrintTrie(Trie trie)
 {
-    Console.WriteLine("The dictionary contains the following words:");
+    Console.WriteLine("El diccionario contiene las siguientes palabras:");
     List<string> words = trie.GetAllWords();
+    int column = 0;
     foreach (string word in words)
     {
-        Console.Write($"{word}, ");
+        Console.Write($"{word.PadRight(20)}"); // Ajusta cada palabra a un ancho de 20 caracteres
+        column++;
+        if (column == 5)
+        {
+            Console.WriteLine();
+            column = 0;
+        }
     }
-    Console.WriteLine();
+    if (column != 0) // Para asegurarse de que hay una nueva línea al final si la última línea tenía menos de 5 palabras
+    {
+        Console.WriteLine();
+    }
 }
